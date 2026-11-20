@@ -1,0 +1,1130 @@
+{
+  "version": "1.0",
+  "umbral_reporte": 0.3,
+  "niveles": {
+    "alta": 0.75,
+    "media": 0.5
+  },
+  "diagnosticos": {
+    "D_AC": {
+      "nombre": "Suministro AC inadecuado (toma, regleta o cable de corriente)",
+      "subsistema": "Alimentación",
+      "accion": "Pruebe la toma con otro aparato y vuelva a medir; cambie regleta o cable de corriente. Si el voltaje es estable y correcto, pase a revisar la fuente.",
+      "seguridad": "Mida la toma con cuidado y sin tocar las puntas del multímetro."
+    },
+    "D_FUS": {
+      "nombre": "Fusible de la fuente abierto (posible cortocircuito en la etapa primaria)",
+      "subsistema": "Alimentación",
+      "accion": "No sustituya el fusible por uno de mayor amperaje. Cambie la fuente completa o llévela a reparación: un fusible abierto suele indicar un cortocircuito.",
+      "seguridad": "No abra la fuente: sus capacitores pueden retener carga peligrosa aunque esté desconectada."
+    },
+    "D_PSU": {
+      "nombre": "Fuente de poder degradada o defectuosa (rieles fuera de tolerancia)",
+      "subsistema": "Alimentación",
+      "accion": "Confirme con un probador de fuentes o midiendo con carga; sustituya la fuente por una de potencia adecuada.",
+      "seguridad": "No abra la fuente: sus capacitores pueden retener carga peligrosa aunque esté desconectada."
+    },
+    "D_PSU_ALTO": {
+      "nombre": "Fuente con regulación defectuosa (sobretensión en algún riel)",
+      "subsistema": "Alimentación",
+      "accion": "Deje de usar esa fuente de inmediato y sustitúyala; revise si placa base, RAM o discos resultaron dañados.",
+      "seguridad": "Una sobretensión puede dañar otros componentes: no encienda el equipo con esa fuente."
+    },
+    "D_QUEMADO": {
+      "nombre": "Componente dañado por sobrecarga o cortocircuito",
+      "subsistema": "Alimentación",
+      "accion": "Desconecte el equipo, inspeccione visualmente (capacitores hinchados, zonas oscurecidas) y aísle la causa retirando componentes de uno en uno.",
+      "seguridad": "Riesgo de incendio o descarga: desconecte de la corriente antes de abrir el equipo."
+    },
+    "D_BTN": {
+      "nombre": "Botón de encendido, cable del panel frontal o placa base sin arranque",
+      "subsistema": "Arranque",
+      "accion": "Con el equipo desconectado, revise el conector del botón (PWR_SW) en la placa; descarte el botón puenteando brevemente esos pines con un destornillador aislado; si no arranca, sospeche de la placa base.",
+      "seguridad": "Desconecte el cable de corriente antes de manipular conectores internos."
+    },
+    "D_RAM": {
+      "nombre": "Memoria RAM mal asentada o defectuosa",
+      "subsistema": "Arranque",
+      "accion": "Retire y reasiente los módulos, pruébelos de uno en uno y en otra ranura; limpie los contactos con alcohol isopropílico.",
+      "seguridad": "Use pulsera antiestática o toque el chasis metálico antes de manipular los módulos."
+    },
+    "D_GPU": {
+      "nombre": "Tarjeta de video mal asentada o defectuosa",
+      "subsistema": "Arranque",
+      "accion": "Reasiente la tarjeta y sus conectores de alimentación PCIe; pruebe con video integrado o con otra tarjeta.",
+      "seguridad": "Desconecte el equipo antes de retirar la tarjeta."
+    },
+    "D_MON": {
+      "nombre": "Cable o monitor de video",
+      "subsistema": "Arranque",
+      "accion": "Pruebe otro cable y otro puerto de video, y el monitor con otro equipo. Es la revisión más barata: hágala primero.",
+      "seguridad": "Sin riesgos especiales."
+    },
+    "D_CPU_MB": {
+      "nombre": "CPU, placa base o BIOS (el equipo no completa el POST)",
+      "subsistema": "Arranque",
+      "accion": "Limpie la CMOS (jumper o retirar la pila 30 s), reasiente el procesador y revise pines y ranura; si persiste, pruebe con componentes conocidos.",
+      "seguridad": "Desconecte el equipo y use protección antiestática."
+    },
+    "D_TERM": {
+      "nombre": "Sobrecalentamiento (disipador, pasta térmica o ventilación)",
+      "subsistema": "Arranque",
+      "accion": "Limpie el polvo, verifique que gire el ventilador del CPU, renueve la pasta térmica y confirme que el disipador esté bien montado.",
+      "seguridad": "El disipador puede estar muy caliente: espere a que el equipo se enfríe."
+    },
+    "D_SOFT": {
+      "nombre": "Problema de memoria, disco o controladores (falla intermitente)",
+      "subsistema": "Arranque",
+      "accion": "Ejecute una prueba de memoria (por ejemplo MemTest86), revise el estado SMART del disco y actualice o revierta controladores; anote el código de la pantalla azul.",
+      "seguridad": "Respalde su información antes de hacer pruebas con el disco."
+    },
+    "D_RED_CABLE": {
+      "nombre": "Cable de red dañado",
+      "subsistema": "Conectividad",
+      "accion": "Sustituya el cable o pruébelo con un probador; revise los conectores RJ-45.",
+      "seguridad": "Sin riesgos especiales."
+    },
+    "D_RED_NIC": {
+      "nombre": "Puerto o adaptador de red defectuoso (o controlador)",
+      "subsistema": "Conectividad",
+      "accion": "Pruebe otro puerto del switch o router, reinstale el controlador y, de ser posible, pruebe con un adaptador USB-Ethernet.",
+      "seguridad": "Sin riesgos especiales."
+    },
+    "D_USB": {
+      "nombre": "Puertos o controlador USB defectuosos",
+      "subsistema": "Conectividad",
+      "accion": "Pruebe otros puertos (frontales y traseros), revise los conectores internos y reinicie la configuración de BIOS.",
+      "seguridad": "Desconecte el equipo antes de revisar conectores internos."
+    }
+  },
+  "reglas": [
+    {
+      "id": "H01",
+      "prioridad": 10,
+      "tipo": "hecho",
+      "si": [
+        [
+          "v_ac",
+          "<",
+          114
+        ]
+      ],
+      "hecho": {
+        "nombre": "ac_ok",
+        "valor": "no"
+      },
+      "porque": "La toma entrega {v_ac} V, por debajo del rango de trabajo (114 a 140 V)."
+    },
+    {
+      "id": "H02",
+      "prioridad": 10,
+      "tipo": "hecho",
+      "si": [
+        [
+          "v_ac",
+          ">",
+          140
+        ]
+      ],
+      "hecho": {
+        "nombre": "ac_ok",
+        "valor": "no"
+      },
+      "porque": "La toma entrega {v_ac} V, por encima del rango de trabajo (114 a 140 V)."
+    },
+    {
+      "id": "H03",
+      "prioridad": 10,
+      "tipo": "hecho",
+      "si": [
+        [
+          "v_ac",
+          "entre",
+          [
+            114,
+            140
+          ]
+        ]
+      ],
+      "hecho": {
+        "nombre": "ac_ok",
+        "valor": "si"
+      },
+      "porque": "La toma entrega {v_ac} V, dentro del rango de trabajo."
+    },
+    {
+      "id": "H04",
+      "prioridad": 10,
+      "tipo": "hecho",
+      "si": [
+        [
+          "v_12",
+          "<",
+          11.4
+        ]
+      ],
+      "hecho": {
+        "nombre": "riel_12",
+        "valor": "bajo"
+      },
+      "porque": "El riel de 12 V mide {v_12} V (mínimo aceptable 11.40 V, tolerancia de ±5%)."
+    },
+    {
+      "id": "H05",
+      "prioridad": 10,
+      "tipo": "hecho",
+      "si": [
+        [
+          "v_12",
+          "entre",
+          [
+            11.4,
+            12.6
+          ]
+        ]
+      ],
+      "hecho": {
+        "nombre": "riel_12",
+        "valor": "ok"
+      },
+      "porque": "El riel de 12 V mide {v_12} V, dentro de tolerancia."
+    },
+    {
+      "id": "H06",
+      "prioridad": 10,
+      "tipo": "hecho",
+      "si": [
+        [
+          "v_12",
+          ">",
+          12.6
+        ]
+      ],
+      "hecho": {
+        "nombre": "riel_12",
+        "valor": "alto"
+      },
+      "porque": "El riel de 12 V mide {v_12} V (máximo aceptable 12.60 V)."
+    },
+    {
+      "id": "H07",
+      "prioridad": 10,
+      "tipo": "hecho",
+      "si": [
+        [
+          "v_5",
+          "<",
+          4.75
+        ]
+      ],
+      "hecho": {
+        "nombre": "riel_5",
+        "valor": "bajo"
+      },
+      "porque": "El riel de 5 V mide {v_5} V (mínimo aceptable 4.75 V)."
+    },
+    {
+      "id": "H08",
+      "prioridad": 10,
+      "tipo": "hecho",
+      "si": [
+        [
+          "v_5",
+          "entre",
+          [
+            4.75,
+            5.25
+          ]
+        ]
+      ],
+      "hecho": {
+        "nombre": "riel_5",
+        "valor": "ok"
+      },
+      "porque": "El riel de 5 V mide {v_5} V, dentro de tolerancia."
+    },
+    {
+      "id": "H09",
+      "prioridad": 10,
+      "tipo": "hecho",
+      "si": [
+        [
+          "v_5",
+          ">",
+          5.25
+        ]
+      ],
+      "hecho": {
+        "nombre": "riel_5",
+        "valor": "alto"
+      },
+      "porque": "El riel de 5 V mide {v_5} V (máximo aceptable 5.25 V)."
+    },
+    {
+      "id": "H10",
+      "prioridad": 10,
+      "tipo": "hecho",
+      "si": [
+        [
+          "v_3_3",
+          "<",
+          3.135
+        ]
+      ],
+      "hecho": {
+        "nombre": "riel_3_3",
+        "valor": "bajo"
+      },
+      "porque": "El riel de 3.3 V mide {v_3_3} V (mínimo aceptable 3.135 V)."
+    },
+    {
+      "id": "H11",
+      "prioridad": 10,
+      "tipo": "hecho",
+      "si": [
+        [
+          "v_3_3",
+          "entre",
+          [
+            3.135,
+            3.465
+          ]
+        ]
+      ],
+      "hecho": {
+        "nombre": "riel_3_3",
+        "valor": "ok"
+      },
+      "porque": "El riel de 3.3 V mide {v_3_3} V, dentro de tolerancia."
+    },
+    {
+      "id": "H12",
+      "prioridad": 10,
+      "tipo": "hecho",
+      "si": [
+        [
+          "v_3_3",
+          ">",
+          3.465
+        ]
+      ],
+      "hecho": {
+        "nombre": "riel_3_3",
+        "valor": "alto"
+      },
+      "porque": "El riel de 3.3 V mide {v_3_3} V (máximo aceptable 3.465 V)."
+    },
+    {
+      "id": "H13",
+      "prioridad": 10,
+      "tipo": "hecho",
+      "si": [
+        [
+          "temp_cpu",
+          ">",
+          90
+        ]
+      ],
+      "hecho": {
+        "nombre": "termico_alto",
+        "valor": "si"
+      },
+      "porque": "La temperatura del CPU es {temp_cpu} °C (por encima de 90 °C)."
+    },
+    {
+      "id": "H14",
+      "prioridad": 20,
+      "tipo": "hecho",
+      "si": [
+        [
+          "ac_ok",
+          "==",
+          "si"
+        ],
+        [
+          "riel_12",
+          "==",
+          "ok"
+        ],
+        [
+          "riel_5",
+          "==",
+          "ok"
+        ],
+        [
+          "riel_3_3",
+          "==",
+          "ok"
+        ]
+      ],
+      "hecho": {
+        "nombre": "alimentacion_ok",
+        "valor": "si"
+      },
+      "porque": "La alimentación es correcta: toma de AC y los tres rieles están dentro de tolerancia."
+    },
+    {
+      "id": "H15",
+      "prioridad": 15,
+      "tipo": "hecho",
+      "si": [
+        [
+          "ac_ok",
+          "==",
+          "si"
+        ]
+      ],
+      "hecho": {
+        "nombre": "entrada_ac_valida",
+        "valor": "si"
+      },
+      "porque": "Suministro AC correcto."
+    },
+    {
+      "id": "H16",
+      "prioridad": 15,
+      "tipo": "hecho",
+      "si": [
+        [
+          "v_ac",
+          "indefinido",
+          null
+        ]
+      ],
+      "hecho": {
+        "nombre": "entrada_ac_valida",
+        "valor": "si"
+      },
+      "porque": "Voltaje AC no capturado; se evalúan los rieles DC."
+    },
+    {
+      "id": "H17",
+      "prioridad": 15,
+      "tipo": "hecho",
+      "si": [
+        [
+          "fusible_continuidad",
+          "==",
+          "si"
+        ]
+      ],
+      "hecho": {
+        "nombre": "fusible_valido",
+        "valor": "si"
+      },
+      "porque": "Fusible con continuidad."
+    },
+    {
+      "id": "H18",
+      "prioridad": 15,
+      "tipo": "hecho",
+      "si": [
+        [
+          "fusible_continuidad",
+          "indefinido",
+          null
+        ]
+      ],
+      "hecho": {
+        "nombre": "fusible_valido",
+        "valor": "si"
+      },
+      "porque": "Fusible no capturado; se evalúan los rieles DC."
+    },
+    {
+      "id": "R01",
+      "prioridad": 100,
+      "tipo": "diagnostico",
+      "si": [
+        [
+          "ac_ok",
+          "==",
+          "no"
+        ]
+      ],
+      "diagnostico": {
+        "id": "D_AC",
+        "cf": 0.9
+      },
+      "porque": "El voltaje de la toma ({v_ac} V) está fuera de rango."
+    },
+    {
+      "id": "R02",
+      "prioridad": 100,
+      "tipo": "diagnostico",
+      "si": [
+        [
+          "fusible_continuidad",
+          "==",
+          "no"
+        ]
+      ],
+      "diagnostico": {
+        "id": "D_FUS",
+        "cf": 0.85
+      },
+      "porque": "No hay continuidad en el fusible de la fuente."
+    },
+    {
+      "id": "R03",
+      "prioridad": 101,
+      "tipo": "diagnostico",
+      "si": [
+        [
+          "fusible_continuidad",
+          "==",
+          "no"
+        ],
+        [
+          "led_encendido",
+          "==",
+          "no"
+        ]
+      ],
+      "diagnostico": {
+        "id": "D_FUS",
+        "cf": 0.5
+      },
+      "porque": "Además del fusible abierto, el LED de encendido está apagado."
+    },
+    {
+      "id": "R04",
+      "prioridad": 110,
+      "tipo": "diagnostico",
+      "si": [
+        [
+          "olor_quemado",
+          "==",
+          "si"
+        ]
+      ],
+      "diagnostico": {
+        "id": "D_QUEMADO",
+        "cf": 0.75
+      },
+      "porque": "Se reporta olor a quemado."
+    },
+    {
+      "id": "R05",
+      "prioridad": 110,
+      "tipo": "diagnostico",
+      "si": [
+        [
+          "chispazo",
+          "==",
+          "si"
+        ]
+      ],
+      "diagnostico": {
+        "id": "D_QUEMADO",
+        "cf": 0.65
+      },
+      "porque": "Se reportó un chispazo en observaciones."
+    },
+    {
+      "id": "R06",
+      "prioridad": 120,
+      "tipo": "diagnostico",
+      "si": [
+        [
+          "entrada_ac_valida",
+          "==",
+          "si"
+        ],
+        [
+          "fusible_valido",
+          "==",
+          "si"
+        ],
+        [
+          "riel_12",
+          "==",
+          "bajo"
+        ]
+      ],
+      "diagnostico": {
+        "id": "D_PSU",
+        "cf": 0.6
+      },
+      "porque": "El riel de 12 V está bajo ({v_12} V)."
+    },
+    {
+      "id": "R07",
+      "prioridad": 120,
+      "tipo": "diagnostico",
+      "si": [
+        [
+          "entrada_ac_valida",
+          "==",
+          "si"
+        ],
+        [
+          "fusible_valido",
+          "==",
+          "si"
+        ],
+        [
+          "riel_5",
+          "==",
+          "bajo"
+        ]
+      ],
+      "diagnostico": {
+        "id": "D_PSU",
+        "cf": 0.6
+      },
+      "porque": "El riel de 5 V está bajo ({v_5} V)."
+    },
+    {
+      "id": "R08",
+      "prioridad": 120,
+      "tipo": "diagnostico",
+      "si": [
+        [
+          "entrada_ac_valida",
+          "==",
+          "si"
+        ],
+        [
+          "fusible_valido",
+          "==",
+          "si"
+        ],
+        [
+          "riel_3_3",
+          "==",
+          "bajo"
+        ]
+      ],
+      "diagnostico": {
+        "id": "D_PSU",
+        "cf": 0.5
+      },
+      "porque": "El riel de 3.3 V está bajo ({v_3_3} V)."
+    },
+    {
+      "id": "R09",
+      "prioridad": 120,
+      "tipo": "diagnostico",
+      "si": [
+        [
+          "riel_12",
+          "==",
+          "alto"
+        ]
+      ],
+      "diagnostico": {
+        "id": "D_PSU_ALTO",
+        "cf": 0.8
+      },
+      "porque": "El riel de 12 V está alto ({v_12} V)."
+    },
+    {
+      "id": "R10",
+      "prioridad": 120,
+      "tipo": "diagnostico",
+      "si": [
+        [
+          "riel_5",
+          "==",
+          "alto"
+        ]
+      ],
+      "diagnostico": {
+        "id": "D_PSU_ALTO",
+        "cf": 0.8
+      },
+      "porque": "El riel de 5 V está alto ({v_5} V)."
+    },
+    {
+      "id": "R11",
+      "prioridad": 120,
+      "tipo": "diagnostico",
+      "si": [
+        [
+          "riel_3_3",
+          "==",
+          "alto"
+        ]
+      ],
+      "diagnostico": {
+        "id": "D_PSU_ALTO",
+        "cf": 0.8
+      },
+      "porque": "El riel de 3.3 V está alto ({v_3_3} V)."
+    },
+    {
+      "id": "R12",
+      "prioridad": 121,
+      "tipo": "diagnostico",
+      "si": [
+        [
+          "reinicios",
+          "==",
+          "si"
+        ],
+        [
+          "riel_12",
+          "==",
+          "bajo"
+        ]
+      ],
+      "diagnostico": {
+        "id": "D_PSU",
+        "cf": 0.35
+      },
+      "porque": "Hay reinicios y el riel de 12 V está bajo: típico de una fuente que no sostiene la carga."
+    },
+    {
+      "id": "R13",
+      "prioridad": 130,
+      "tipo": "diagnostico",
+      "si": [
+        [
+          "alimentacion_ok",
+          "==",
+          "si"
+        ],
+        [
+          "led_encendido",
+          "==",
+          "no"
+        ],
+        [
+          "ventiladores",
+          "==",
+          "no"
+        ]
+      ],
+      "diagnostico": {
+        "id": "D_BTN",
+        "cf": 0.65
+      },
+      "porque": "La alimentación es correcta pero no hay LED ni giro de ventiladores: falla en la orden de encendido."
+    },
+    {
+      "id": "R14",
+      "prioridad": 130,
+      "tipo": "diagnostico",
+      "si": [
+        [
+          "alimentacion_ok",
+          "==",
+          "si"
+        ],
+        [
+          "led_encendido",
+          "==",
+          "no"
+        ],
+        [
+          "ventiladores",
+          "==",
+          "no"
+        ]
+      ],
+      "diagnostico": {
+        "id": "D_CPU_MB",
+        "cf": 0.3
+      },
+      "porque": "Con alimentación correcta y sin señales de vida, la placa base también es sospechosa."
+    },
+    {
+      "id": "R15",
+      "prioridad": 140,
+      "tipo": "diagnostico",
+      "si": [
+        [
+          "alimentacion_ok",
+          "==",
+          "si"
+        ],
+        [
+          "ventiladores",
+          "==",
+          "si"
+        ],
+        [
+          "video",
+          "==",
+          "no"
+        ],
+        [
+          "beeps",
+          "==",
+          "cortos_repetitivos"
+        ]
+      ],
+      "diagnostico": {
+        "id": "D_RAM",
+        "cf": 0.85
+      },
+      "porque": "Hay alimentación y ventiladores pero sin video, con pitidos cortos repetitivos (patrón típico de falla de memoria)."
+    },
+    {
+      "id": "R16",
+      "prioridad": 140,
+      "tipo": "diagnostico",
+      "si": [
+        [
+          "alimentacion_ok",
+          "==",
+          "si"
+        ],
+        [
+          "ventiladores",
+          "==",
+          "si"
+        ],
+        [
+          "video",
+          "==",
+          "no"
+        ],
+        [
+          "beeps",
+          "==",
+          "uno_largo_dos_cortos"
+        ]
+      ],
+      "diagnostico": {
+        "id": "D_GPU",
+        "cf": 0.8
+      },
+      "porque": "Sin video con patrón de 1 pitido largo y 2 cortos (en muchas BIOS indica falla de video)."
+    },
+    {
+      "id": "R17",
+      "prioridad": 140,
+      "tipo": "diagnostico",
+      "si": [
+        [
+          "alimentacion_ok",
+          "==",
+          "si"
+        ],
+        [
+          "ventiladores",
+          "==",
+          "si"
+        ],
+        [
+          "video",
+          "==",
+          "no"
+        ],
+        [
+          "beeps",
+          "==",
+          "ninguno"
+        ]
+      ],
+      "diagnostico": {
+        "id": "D_MON",
+        "cf": 0.55
+      },
+      "porque": "Sin video ni pitidos con alimentación correcta: primero se descarta cable o monitor."
+    },
+    {
+      "id": "R18",
+      "prioridad": 140,
+      "tipo": "diagnostico",
+      "si": [
+        [
+          "alimentacion_ok",
+          "==",
+          "si"
+        ],
+        [
+          "ventiladores",
+          "==",
+          "si"
+        ],
+        [
+          "video",
+          "==",
+          "no"
+        ],
+        [
+          "beeps",
+          "==",
+          "ninguno"
+        ]
+      ],
+      "diagnostico": {
+        "id": "D_CPU_MB",
+        "cf": 0.45
+      },
+      "porque": "Sin video ni pitidos con alimentación correcta: también puede ser CPU, placa base o BIOS."
+    },
+    {
+      "id": "R19",
+      "prioridad": 140,
+      "tipo": "diagnostico",
+      "si": [
+        [
+          "ventiladores",
+          "==",
+          "si"
+        ],
+        [
+          "video",
+          "==",
+          "no"
+        ],
+        [
+          "beeps",
+          "==",
+          "continuo"
+        ]
+      ],
+      "diagnostico": {
+        "id": "D_PSU",
+        "cf": 0.4
+      },
+      "porque": "Pitido continuo: suele asociarse a problemas de alimentación."
+    },
+    {
+      "id": "R20",
+      "prioridad": 140,
+      "tipo": "diagnostico",
+      "si": [
+        [
+          "ventiladores",
+          "==",
+          "si"
+        ],
+        [
+          "video",
+          "==",
+          "no"
+        ],
+        [
+          "beeps",
+          "==",
+          "continuo"
+        ]
+      ],
+      "diagnostico": {
+        "id": "D_RAM",
+        "cf": 0.45
+      },
+      "porque": "Pitido continuo: también se asocia a problemas de memoria."
+    },
+    {
+      "id": "R21",
+      "prioridad": 150,
+      "tipo": "diagnostico",
+      "si": [
+        [
+          "termico_alto",
+          "==",
+          "si"
+        ]
+      ],
+      "diagnostico": {
+        "id": "D_TERM",
+        "cf": 0.85
+      },
+      "porque": "La temperatura del CPU es {temp_cpu} °C, demasiado alta."
+    },
+    {
+      "id": "R22",
+      "prioridad": 150,
+      "tipo": "diagnostico",
+      "si": [
+        [
+          "apagado_solo",
+          "==",
+          "si"
+        ]
+      ],
+      "diagnostico": {
+        "id": "D_TERM",
+        "cf": 0.45
+      },
+      "porque": "El equipo se apaga solo (posible protección térmica)."
+    },
+    {
+      "id": "R23",
+      "prioridad": 160,
+      "tipo": "diagnostico",
+      "si": [
+        [
+          "pantalla_azul",
+          "==",
+          "si"
+        ]
+      ],
+      "diagnostico": {
+        "id": "D_SOFT",
+        "cf": 0.65
+      },
+      "porque": "Se reportó pantalla azul en observaciones."
+    },
+    {
+      "id": "R24",
+      "prioridad": 160,
+      "tipo": "diagnostico",
+      "si": [
+        [
+          "reinicios",
+          "==",
+          "si"
+        ],
+        [
+          "alimentacion_ok",
+          "==",
+          "si"
+        ]
+      ],
+      "diagnostico": {
+        "id": "D_SOFT",
+        "cf": 0.45
+      },
+      "porque": "Hay reinicios con alimentación correcta: se sospecha de memoria, disco o controladores."
+    },
+    {
+      "id": "R25",
+      "prioridad": 170,
+      "tipo": "diagnostico",
+      "si": [
+        [
+          "red_detectada",
+          "==",
+          "no"
+        ],
+        [
+          "continuidad_cable_red",
+          "==",
+          "no"
+        ]
+      ],
+      "diagnostico": {
+        "id": "D_RED_CABLE",
+        "cf": 0.85
+      },
+      "porque": "No hay red y el cable no tiene continuidad."
+    },
+    {
+      "id": "R26",
+      "prioridad": 170,
+      "tipo": "diagnostico",
+      "si": [
+        [
+          "red_detectada",
+          "==",
+          "no"
+        ],
+        [
+          "continuidad_cable_red",
+          "==",
+          "si"
+        ],
+        [
+          "led_puerto_red",
+          "==",
+          "no"
+        ]
+      ],
+      "diagnostico": {
+        "id": "D_RED_NIC",
+        "cf": 0.75
+      },
+      "porque": "El cable tiene continuidad pero el LED del puerto está apagado: falla del puerto o adaptador."
+    },
+    {
+      "id": "R27",
+      "prioridad": 170,
+      "tipo": "diagnostico",
+      "si": [
+        [
+          "red_detectada",
+          "==",
+          "no"
+        ],
+        [
+          "continuidad_cable_red",
+          "==",
+          "si"
+        ],
+        [
+          "led_puerto_red",
+          "==",
+          "si"
+        ]
+      ],
+      "diagnostico": {
+        "id": "D_RED_NIC",
+        "cf": 0.45
+      },
+      "porque": "Cable y LED correctos pero sin red: probable problema de controlador o adaptador."
+    },
+    {
+      "id": "R28",
+      "prioridad": 180,
+      "tipo": "diagnostico",
+      "si": [
+        [
+          "usb_responde",
+          "==",
+          "no"
+        ],
+        [
+          "riel_5",
+          "==",
+          "ok"
+        ]
+      ],
+      "diagnostico": {
+        "id": "D_USB",
+        "cf": 0.65
+      },
+      "porque": "Los periféricos USB no responden aunque el riel de 5 V está bien."
+    },
+    {
+      "id": "R29",
+      "prioridad": 180,
+      "tipo": "diagnostico",
+      "si": [
+        [
+          "usb_responde",
+          "==",
+          "no"
+        ],
+        [
+          "v_5",
+          "indefinido",
+          null
+        ]
+      ],
+      "diagnostico": {
+        "id": "D_USB",
+        "cf": 0.45
+      },
+      "porque": "Los periféricos USB no responden (el riel de 5 V no se midió)."
+    },
+    {
+      "id": "R30",
+      "prioridad": 180,
+      "tipo": "hecho",
+      "si": [
+        [
+          "usb_responde",
+          "==",
+          "no"
+        ],
+        [
+          "riel_5",
+          "==",
+          "bajo"
+        ]
+      ],
+      "hecho": {
+        "nombre": "usb_sin_5v",
+        "valor": "si"
+      },
+      "porque": "Los USB no responden como consecuencia de la caída en el riel de 5 V."
+    }
+  ]
+}
