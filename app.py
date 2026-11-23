@@ -6,6 +6,8 @@ from motor_inferencia import CATEGORICOS, diagnosticar, formatear_resultado
 
 
 class AplicacionDiagnostico(tk.Tk):
+    """Interfaz de datos estructurados; el texto libre solo usa el normalizador actual."""
+
     def __init__(self):
         super().__init__()
         self.title("Diagnóstico de fallas en hardware - Sistema experto")

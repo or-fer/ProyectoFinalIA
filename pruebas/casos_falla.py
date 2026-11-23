@@ -1,6 +1,10 @@
-"""Casos de prueba para validar el sistema experto de diagnostico."""
+"""Casos históricos congelados de la fase 0.
 
-# Cada tupla: (nombre_caso, entrada_dict, texto_libre, id_diagnostico_esperado, espera_advertencia)
+Las 20 tuplas forman la línea base del proyecto. Cada tupla contiene
+(nombre, datos estructurados, observaciones, diagnóstico principal esperado,
+indicador de advertencia esperada).
+"""
+
 CASOS = [
     ("Toma AC baja", {"v_ac": 95}, "", "D_AC", False),
     ("Toma AC alta", {"v_ac": 155}, "", "D_AC", False),
