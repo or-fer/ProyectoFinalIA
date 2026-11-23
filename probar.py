@@ -6,6 +6,12 @@
 import sys
 from motor_inferencia import diagnosticar
 from pruebas.casos_falla import CASOS
+from pruebas.casos_motor import (
+    casos_cf,
+    casos_encadenamiento,
+    casos_operadores,
+    casos_validacion,
+)
 from pruebas.ejemplos_lenguaje import (
     CASOS_CONOCIDOS_INCOMPLETOS,
     EJEMPLOS_CORRECTOS,
@@ -20,6 +26,7 @@ from normalizar import extraer_hechos
 
 
 def validar_contrato_fase_0():
+    """Fase 0: verifica datos conocidos y ejemplos humanos congelados."""
     errores = []
 
     for nombre, entrada, _, _, _ in CASOS:
@@ -46,9 +53,22 @@ def validar_contrato_fase_0():
 
 
 def main(verbose=False):
+    """Ejecuta fases 0 y 1 y devuelve 0 únicamente si todo permanece aprobado."""
     ok = 0
     fallas = []
     contrato = validar_contrato_fase_0()
+
+    pruebas_motor = []
+    pruebas_motor.extend(casos_operadores())
+    pruebas_motor.extend(casos_encadenamiento())
+    pruebas_motor.extend(casos_cf())
+    pruebas_motor.extend(casos_validacion())
+    motor_ok = 0
+    for nombre, obtenido, esperado in pruebas_motor:
+        bien = obtenido == esperado
+        motor_ok += bien
+        if not bien:
+            fallas.append((f"Motor: {nombre}", f"esperado={esperado}", f"obtenido={obtenido}"))
 
     for nombre, entrada, obs, esperado, espera_aviso in CASOS:
         res = diagnosticar(entrada, obs)
@@ -69,13 +89,14 @@ def main(verbose=False):
         fallas.extend(("Contrato fase 0", error, "") for error in contrato)
 
     print(f"Casos aprobados: {ok}/{len(CASOS)} ({100 * ok // len(CASOS)}%)")
+    print(f"Pruebas de motor: {motor_ok}/{len(pruebas_motor)}")
     print(f"Contratos de fase 0: {len(contrato)}")
     print(f"Ejemplos humanos correctos: {len(EJEMPLOS_CORRECTOS)}")
     print(f"Limitaciones humanas documentadas: {len(CASOS_CONOCIDOS_INCOMPLETOS)}")
     if verbose:
         for f in fallas:
             print("  FALLA:", f)
-    return 0 if ok == len(CASOS) and not contrato else 1
+    return 0 if ok == len(CASOS) and motor_ok == len(pruebas_motor) and not contrato else 1
 
 
 if __name__ == "__main__":

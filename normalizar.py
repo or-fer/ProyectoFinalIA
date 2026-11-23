@@ -8,6 +8,7 @@ import unicodedata
 
 # Palabras clave que se traducen a hechos booleanos si no vienen en el formulario
 PATRONES_OBSERVACIONES = {
+    # Estas frases producen hechos positivos; negaciones e incertidumbre aún no se interpretan.
     "chispazo": ["CHISPA", "CHISPAZO", "CHISPAZOS", "CORTO"],
     "reinicios": ["REINICIA", "REINICIOS", "REINICIANDO", "SE REINICIA"],
     "apagado_solo": ["APAGA SOLO", "SE APAGA", "APAGADO REPENTINO"],

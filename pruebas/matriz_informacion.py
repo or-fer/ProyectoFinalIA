@@ -5,6 +5,7 @@ Las clases solo describen los datos que el sistema puede recibir hoy.
 """
 
 DATOS_MEDIDOS = {
+    # Datos numéricos que la interfaz puede presentar al motor.
     "v_ac": {"tipo": "numero", "unidad": "V", "ejemplo": 127},
     "v_12": {"tipo": "numero", "unidad": "V", "ejemplo": 12.05},
     "v_5": {"tipo": "numero", "unidad": "V", "ejemplo": 5.01},
@@ -13,6 +14,7 @@ DATOS_MEDIDOS = {
 }
 
 DATOS_CATEGORICOS = {
+    # Datos discretos aceptados hoy por la interfaz y el validador.
     "fusible_continuidad": {"tipo": "si_no", "ejemplo": "si"},
     "led_encendido": {"tipo": "si_no", "ejemplo": "si"},
     "ventiladores": {"tipo": "si_no", "ejemplo": "si"},
@@ -30,6 +32,7 @@ DATOS_CATEGORICOS = {
 }
 
 OBSERVACIONES_HOY = {
+    # Hechos extraíbles por el normalizador actual; no representan lenguaje libre completo.
     "chispazo": ["chispazo", "chispazos", "chispa", "corto"],
     "reinicios": ["reinicia", "reinicios", "reiniciando", "se reinicia"],
     "apagado_solo": ["apaga solo", "se apaga", "apagado repentino"],
@@ -44,6 +47,7 @@ OBSERVACIONES_HOY = {
 }
 
 HECHOS_DERIVADOS = {
+    # Hechos creados por reglas internas: no deben confundirse con datos capturados.
     "ac_ok": {"valores": ["si", "no"]},
     "entrada_ac_valida": {"valores": ["si", "no"]},
     "riel_12": {"valores": ["bajo", "ok", "alto"]},
@@ -56,6 +60,7 @@ HECHOS_DERIVADOS = {
 }
 
 CONCLUSIONES = {
+    # Salidas separadas de datos: nunca se mezclan con hechos de entrada.
     "diagnosticos": "Resultado generado por reglas SI-ENTONCES.",
     "advertencias": "Contradiccion fisica o logica detectada por congruencia.",
     "sugerencias": "Datos adicionales necesarios para continuar el diagnostico.",

@@ -1,4 +1,8 @@
-"""Demostracion rapida por consola con tres escenarios tipicos."""
+"""Demostracion rapida por consola con tres escenarios tipicos.
+
+Los datos ya están estructurados. Esta demostración no prueba conversación
+humana ni extracción automática de mediciones desde texto libre.
+"""
 from motor_inferencia import diagnosticar, formatear_resultado
 
 EJEMPLOS = [

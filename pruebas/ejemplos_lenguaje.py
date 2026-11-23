@@ -6,6 +6,7 @@ en esta fase.
 """
 
 EJEMPLOS_CORRECTOS = [
+    # Línea base positiva: cada frase debe producir exactamente el hecho indicado.
     ("hubo un chispazo", {"chispazo": "si"}),
     ("se reinicia cada rato", {"reinicios": "si"}),
     ("el equipo se apaga solo", {"apagado_solo": "si"}),
@@ -15,6 +16,7 @@ EJEMPLOS_CORRECTOS = [
 ]
 
 CASOS_CONOCIDOS_INCOMPLETOS = [
+    # Deuda documentada de fase 0; no son casos aprobados ni deben ocultarse.
     {
         "texto": "no hubo chispazo",
         "problema": "Falta manejo de negacion.",
