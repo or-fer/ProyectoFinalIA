@@ -15,6 +15,7 @@ A partir de un formulario con mediciones eléctricas básicas (toma AC, continui
 ```text
 DiagnosticoHardwareIA/
 ├── app.py                     # Interfaz gráfica en Tkinter
+├── gestor_sesion.py           # Estado, historial y etapas de una sesión
 ├── motor_inferencia.py        # Motor de encadenamiento hacia adelante, CF y congruencia
 ├── base_conocimiento.json     # Hechos derivados, reglas SI-ENTONCES y diagnósticos
 ├── normalizar.py              # Limpieza de texto libre en observaciones
@@ -25,6 +26,11 @@ DiagnosticoHardwareIA/
 ├── requirements.txt
 └── README.md
 ```
+
+`GestorSesion` conserva los datos estructurados, los hechos extraídos de las
+observaciones, el historial y la etapa actual (1 a 4). La interfaz lo utiliza
+para enviar cada turno al normalizador y después al motor sin mezclar hechos
+extraídos con campos estructurados.
 
 ## 3. Requisitos y ejecución
 

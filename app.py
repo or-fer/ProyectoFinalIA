@@ -2,7 +2,8 @@
 import tkinter as tk
 from tkinter import ttk
 
-from motor_inferencia import CATEGORICOS, diagnosticar, formatear_resultado
+from gestor_sesion import GestorSesion
+from motor_inferencia import CATEGORICOS, formatear_resultado
 
 
 class AplicacionDiagnostico(tk.Tk):
@@ -15,6 +16,7 @@ class AplicacionDiagnostico(tk.Tk):
         self.minsize(920, 620)
 
         self.entradas = {}
+        self.gestor_sesion = GestorSesion()
         self._construir_interfaz()
 
     def _construir_interfaz(self):
@@ -96,7 +98,7 @@ class AplicacionDiagnostico(tk.Tk):
     def ejecutar_diagnostico(self):
         datos = {k: v.get() for k, v in self.entradas.items()}
         observaciones = self.txt_obs.get("1.0", "end").strip()
-        resultado = diagnosticar(datos, observaciones)
+        resultado = self.gestor_sesion.procesar(datos, observaciones)
         salida = formatear_resultado(resultado)
 
         self.txt_res.configure(state="normal")
@@ -105,6 +107,7 @@ class AplicacionDiagnostico(tk.Tk):
         self.txt_res.configure(state="disabled")
 
     def limpiar(self):
+        self.gestor_sesion.reiniciar()
         for var in self.entradas.values():
             var.set("")
         self.txt_obs.delete("1.0", "end")
