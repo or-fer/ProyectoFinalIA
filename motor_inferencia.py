@@ -249,7 +249,21 @@ def revisar_congruencia(hechos):
             "Se reporta red detectada pero sin continuidad en el cable (verifique si usa Wi-Fi)."
         )
 
+    if hechos.get("video") == "si" and hechos.get("beeps") not in (None, "ninguno"):
+        avisos.append(
+            f"Con señal de video activa no deberían presentarse pitidos de error POST ({hechos.get('beeps')})."
+        )
+
+    if hechos.get("olor_quemado") == "si" and (
+        hechos.get("video") == "si" or hechos.get("red_detectada") == "si"
+    ):
+        avisos.append(
+            "Se reporta olor a quemado junto con operación normal de video/red; desconecte el equipo de inmediato."
+        )
+
     return avisos
+
+
 
 
 def _cumple(condicion, hechos):
